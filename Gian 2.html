@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sài Gòn Xưa - Hòn Ngọc Viễn Đông</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper-bg: #f4ecd8; /* Màu nền giấy cũ theo yêu cầu */
+            --paper-darker: #e8d8c3;
+            --ink-color: #3b2818;
+            --ink-light: #5c432e;
+            --accent: #8b291c;
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            color: var(--ink-color);
+            font-family: 'Lora', serif;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Playfair Display', serif;
+            color: var(--ink-color);
+        }
+
+        /* Vintage borders */
+        .vintage-border {
+            border: 2px solid var(--ink-light);
+            padding: 4px;
+            position: relative;
+            background-color: #fffdf9;
+        }
+        .vintage-border::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1px solid var(--ink-light);
+            pointer-events: none;
+        }
+
+        /* Scroll Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Modal Styles for Image Zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(30, 20, 10, 0.92);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80vh;
+            border: 5px solid var(--paper-bg);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            animation: zoomIn 0.3s ease;
+            object-fit: contain;
+        }
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 900px;
+            text-align: center;
+            color: var(--paper-bg);
+            padding: 15px 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-style: italic;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: var(--paper-bg);
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes zoomIn {
+            from {transform:scale(0.9); opacity:0;}
+            to {transform:scale(1); opacity:1;}
+        }
+
+        /* Sepia effect for gallery images */
+        .sepia-img {
+            filter: sepia(0.6) contrast(1.1) brightness(0.95);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .sepia-img:hover {
+            filter: sepia(0) contrast(1) brightness(1);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 10;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="text-lg antialiased selection:bg-[#8b291c] selection:text-white">
+
+    <!-- Hero Banner -->
+    <header class="py-20 md:py-32 text-center px-4 relative overflow-hidden border-b-4 border-[#3b2818]" style="background-image: linear-gradient(rgba(244, 236, 216, 0.85), rgba(232, 216, 195, 0.95)), url('https://upload.wikimedia.org/wikipedia/commons/e/ea/Saigon_-_Rue_Catinat_%281%29.jpg'); background-size: cover; background-position: center; background-attachment: fixed;">
+        <div class="max-w-4xl mx-auto relative z-10 fade-in-section">
+            <p class="text-sm md:text-base uppercase tracking-widest text-[#8b291c] font-bold mb-4">Ký Ức Đô Thị</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight font-heading">Sài Gòn Xưa<br>- Hòn Ngọc Viễn Đông -</h1>
+            <div class="w-24 h-1 bg-[#8b291c] mx-auto rounded"></div>
+            <p class="mt-6 text-xl italic text-[#5c432e]">Công trình biểu tượng và nhịp sống của một đô thị vàng son.</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-[#e8d8c3] bg-opacity-95 backdrop-blur border-b border-[#5c432e] z-40 hidden md:block">
+        <ul class="flex justify-center space-x-8 py-3 text-[#3b2818] font-heading font-bold text-lg">
+            <li><a href="#cong-trinh" class="hover:text-[#8b291c] transition-colors">Công Trình Biểu Tượng</a></li>
+            <li><a href="#nhip-song" class="hover:text-[#8b291c] transition-colors">Nhịp Sống Đô Thị</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 md:px-8 py-16">
+
+        <!-- Section 1: Công Trình Biểu Tượng -->
+        <section id="cong-trinh" class="mb-24 fade-in-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#8b291c] mb-4 font-heading border-b-2 border-[#5c432e] inline-block pb-2">Những Công Trình Biểu Tượng</h2>
+                <p class="max-w-3xl mx-auto text-[#5c432e] mt-4">Những kiệt tác kiến trúc đồ sộ mang âm hưởng quy hoạch Pháp đã tạo nên một diện mạo hoa lệ, hào nhoáng cho Sài Gòn những năm đầu thế kỷ 20.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Chợ Bến Thành -->
+                <div class="vintage-border p-4 flex flex-col h-full shadow-lg">
+                    <div class="overflow-hidden bg-[#e8d8c3] h-64 relative border border-[#5c432e]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJIv8BObEIKlXg57efbWVkoCy0kZZd7UqQQcOXknl7uA&s=10" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e8d8c3/5c432e?text=Chợ+Bến+Thành';" alt="Chợ Bến Thành đầu thế kỷ 20 với tháp đồng hồ đặc trưng" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-4 flex-grow">
+                        <h3 class="text-2xl font-bold font-heading text-[#3b2818] mb-2">Chợ Bến Thành</h3>
+                        <p class="text-sm">Được khánh thành năm 1914 thay thế cho khu chợ cũ bên bờ sông. Ngôi chợ với tháp đồng hồ 4 mặt nhanh chóng trở thành biểu tượng giao thương sầm uất bậc nhất Nam Kỳ.</p>
+                    </div>
+                </div>
+
+                <!-- Nhà thờ Đức Bà -->
+                <div class="vintage-border p-4 flex flex-col h-full shadow-lg">
+                    <div class="overflow-hidden bg-[#e8d8c3] h-64 relative border border-[#5c432e]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBht19WeBoH7Z6DD3huroL8GjRL-9zxmQ39xqtkoofw&s=10" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e8d8c3/5c432e?text=Nhà+thờ+Đức+Bà';" alt="Nhà thờ Đức Bà Sài Gòn (Vương cung thánh đường)" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-4 flex-grow">
+                        <h3 class="text-2xl font-bold font-heading text-[#3b2818] mb-2">Nhà thờ Đức Bà</h3>
+                        <p class="text-sm">Hoàn thành năm 1880 với lối kiến trúc Roman pha trộn Gothic tuyệt mỹ. Toàn bộ vật liệu xây dựng, từ gạch đỏ, ngói cho đến kính màu đều được nhập khẩu trực tiếp từ Pháp.</p>
+                    </div>
+                </div>
+
+                <!-- Bưu điện Trung tâm -->
+                <div class="vintage-border p-4 flex flex-col h-full shadow-lg">
+                    <div class="overflow-hidden bg-[#e8d8c3] h-64 relative border border-[#5c432e]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUBjf0r3a1R3vaAXsJ-Lh0n5JTom0TZKW6sgiwYP2Obw&s=10" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e8d8c3/5c432e?text=Bưu+điện+Trung+tâm';" alt="Bưu điện Trung tâm Sài Gòn khoảng năm 1895" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-4 flex-grow">
+                        <h3 class="text-2xl font-bold font-heading text-[#3b2818] mb-2">Bưu điện Trung tâm</h3>
+                        <p class="text-sm">Tòa nhà lộng lẫy mang phong cách Phục Hưng pha lẫn nét phương Đông, nổi bật với hệ thống vòm mái bằng thép đồ sộ do kiến trúc sư Marie-Alfred Foulhoux thiết kế.</p>
+                    </div>
+                </div>
+
+                <!-- Dinh Norodom (Dinh Độc Lập cũ) -->
+                <div class="vintage-border p-4 flex flex-col h-full shadow-lg">
+                    <div class="overflow-hidden bg-[#e8d8c3] h-64 relative border border-[#5c432e]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnjdPY3t5Dj5Gf8WxzsnnmyO9ZaIFKArxqIpFjclBxEw&s=10" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e8d8c3/5c432e?text=Dinh+Norodom';" alt="Dinh Norodom (Phủ Toàn quyền Đông Dương)" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-4 flex-grow">
+                        <h3 class="text-2xl font-bold font-heading text-[#3b2818] mb-2">Dinh Norodom</h3>
+                        <p class="text-sm">Còn gọi là Phủ Toàn quyền Đông Dương, khánh thành năm 1871. Tòa vinh thự bề thế này từng là biểu tượng quyền lực tối cao của thực dân Pháp tại Nam Kỳ trước khi bị san phẳng để xây Dinh Độc Lập hiện đại.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Nhịp Sống Đô Thị -->
+        <section id="nhip-song" class="mb-12 fade-in-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#8b291c] mb-4 font-heading border-b-2 border-[#5c432e] inline-block pb-2">Nhịp Sống Đô Thị Xưa</h2>
+                <p class="max-w-3xl mx-auto text-[#5c432e] mt-4">Phố xá thênh thang, tiếng lộc cộc của xe ngựa, tà áo dài thướt tha... tất cả họa nên một bức tranh sinh hoạt thị thành đầy hoài niệm.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Đường Catinat -->
+                <div class="bg-[#e8d8c3] p-3 shadow-md border-2 border-[#5c432e] transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                    <div class="overflow-hidden relative h-56">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDVNPiNHpelFN3SagDu-SOstC-b-kxNbfRbn7UsVxJQ&s=10" onerror="this.onerror=null;this.src='https://placehold.co/500x500/d5c4a1/3b2818?text=Đường+Catinat';" alt="Đường Catinat hoa lệ với xe cổ và hàng cây" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-3 text-center">
+                        <h3 class="font-heading font-bold text-xl text-[#3b2818]">Đường Catinat</h3>
+                        <p class="text-sm mt-2">Con đường phồn hoa bậc nhất, nơi dập dìu tài tử giai nhân quanh các cửa hiệu thời trang và quán cà phê mang đậm phong cách Pháp.</p>
+                    </div>
+                </div>
+
+                <!-- Xe ngựa / Phương tiện -->
+                <div class="bg-[#e8d8c3] p-3 shadow-md border-2 border-[#5c432e] transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                    <div class="overflow-hidden relative h-56">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrPwCwP7jnKHkS77oCucNnc2dftpZKNxLxK6_5rRaULw&s=10" onerror="this.onerror=null;this.src='https://placehold.co/500x500/d5c4a1/3b2818?text=Xe+Kéo+Sài+Gòn';" alt="Xe kéo và sinh hoạt trên đường phố" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-3 text-center">
+                        <h3 class="font-heading font-bold text-xl text-[#3b2818]">Xe Ngựa & Xe Kéo</h3>
+                        <p class="text-sm mt-2">Trước khi xe máy phổ biến, tiếng lộc cộc của xe ngựa (xe thổ mộ) và hình ảnh những chiếc xe kéo tay là nét đặc trưng trên đường phố.</p>
+                    </div>
+                </div>
+
+                <!-- Sinh hoạt phố phường -->
+                <div class="bg-[#e8d8c3] p-3 shadow-md border-2 border-[#5c432e] transform rotate-2 hover:rotate-0 transition-transform duration-300">
+                    <div class="overflow-hidden relative h-56">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpRjGitRXq6aP6SAlv76ACadppnnJTvSq52JbjDwWarA&s=10" onerror="this.onerror=null;this.src='https://placehold.co/500x500/d5c4a1/3b2818?text=Sinh+hoạt+Sài+Gòn';" alt="Góc phố sầm uất với người đi bộ và phương tiện" class="w-full h-full object-cover sepia-img image-zoom" loading="lazy">
+                    </div>
+                    <div class="mt-3 text-center">
+                        <h3 class="font-heading font-bold text-xl text-[#3b2818]">Sinh Hoạt Phố Phường</h3>
+                        <p class="text-sm mt-2">Sự nhộn nhịp của các chợ truyền thống len lỏi giữa những tòa nhà chọc trời, thể hiện sự giao thoa văn hóa Đông - Tây độc đáo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer (Hoàn toàn không có QR Code) -->
+    <footer class="bg-[#2c1e13] text-[#d5c4a1] py-8 border-t-4 border-[#8b291c] mt-10">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h3 class="font-heading text-2xl text-white mb-2">Dự Án Ký Ức Đô Thị</h3>
+            <p class="text-sm opacity-80 max-w-xl mx-auto mb-4">Lưu giữ hình ảnh và nhịp sống về một thời kỳ vàng son của vùng đất Sài Gòn - Gia Định.</p>
+            <p class="text-sm">&copy; 2026 Bản quyền thuộc về Tác Giả. Các hình ảnh thuộc Phạm vi Công cộng (Wikimedia Commons).</p>
+        </div>
+    </footer>
+
+    <!-- Modal Phóng To Hình Ảnh -->
+    <div id="imageModal" class="modal">
+        <span class="close" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Hiệu ứng Intersection Observer cho cuộn trang (Fade in)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            const sections = document.querySelectorAll('.fade-in-section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // 2. Logic cho Modal Phóng to Hình ảnh (Lightbox)
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const captionText = document.getElementById("caption");
+            const images = document.querySelectorAll(".image-zoom");
+            const span = document.getElementById("closeModal");
+
+            images.forEach(img => {
+                img.addEventListener('click', function() {
+                    modal.style.display = "block";
+                    modalImg.src = this.src; 
+                    captionText.innerHTML = this.alt;
+                    document.body.style.overflow = "hidden"; // Ngăn cuộn nền
+                });
+            });
+
+            // Đóng modal bằng nút X
+            span.onclick = function() {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+
+            // Đóng modal khi click bên ngoài ảnh
+            modal.onclick = function(e) {
+                if (e.target !== modalImg) {
+                    modal.style.display = "none";
+                    document.body.style.overflow = "auto";
+                }
+            }
+            
+            // Đóng modal bằng phím ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === "Escape" && modal.style.display === "block") {
+                    modal.style.display = "none";
+                    document.body.style.overflow = "auto";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
